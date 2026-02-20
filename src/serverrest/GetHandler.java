@@ -62,7 +62,7 @@ public class GetHandler implements HttpHandler {
             }
 
             // Esegue la logica di calcolo
-            double risultato = DaFareService.logicaDiCalcolo(request);
+            double risultato = Service.logicaDiCalcolo(request);
             
             // Crea l'oggetto risposta
             Response response = new Response(

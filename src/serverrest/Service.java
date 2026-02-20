@@ -8,7 +8,7 @@ package serverrest;
  *
  * @author delfo
  */
-public class DaFareService {
+public class Service {
     
     /**
      * Esegue l'operazione matematica richiesta
@@ -23,7 +23,7 @@ public class DaFareService {
             throws IllegalArgumentException {
         
         // Controllo se i parametri passati sono validi
-                if (!parametriValidi()) {
+                if (!parametriValidi(request)) {
             throw new IllegalArgumentException("Operatore non può essere vuoto");
         }
         
@@ -37,8 +37,13 @@ public class DaFareService {
     }
 
     // Metodo di validazione dei parametri (da implementare)
-    private static boolean parametriValidi()
+    private static boolean parametriValidi(Request request)
     {
-        return false;
+        if (request.getGiocata() == null || request.getGiocata().isEmpty()) {
+            return false;
+        }
+
+        int numero = Integer.parseInt(request.getNumero());
+        return ((numero % 2) == 0 && request.getGiocata().equalsIgnoreCase("PARI")) || ((numero % 2) != 0 && request.getGiocata().equalsIgnoreCase("DISPARI"));
     }
 }
