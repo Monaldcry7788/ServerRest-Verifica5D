@@ -10,7 +10,7 @@ import serverrest.parsers.RequestV1;
  *
  * @author delfo
  */
-public class Service {
+public class ServiceV2 {
     
     /**
      * Esegue l'operazione matematica richiesta

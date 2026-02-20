@@ -11,7 +11,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import serverrest.parsers.RequestV1;
 import serverrest.parsers.ResponseV1;
-import serverrest.Service;
+import serverrest.ServiceV1;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -63,7 +63,7 @@ public class GetHandler implements HttpHandler {
             }
 
             // Esegue la logica di calcolo
-            boolean vittoria = Service.logicaDiCalcolo(request);
+            boolean vittoria = ServiceV1.logicaDiCalcolo(request);
             
             // Crea l'oggetto risposta
             ResponseV1 response = new ResponseV1(request.getGiocata(), request.getNumero(), vittoria);

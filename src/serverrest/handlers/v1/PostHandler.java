@@ -12,7 +12,7 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonSyntaxException;
 import serverrest.parsers.RequestV1;
 import serverrest.parsers.ResponseV1;
-import serverrest.Service;
+import serverrest.ServiceV1;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -66,7 +66,7 @@ public class PostHandler implements HttpHandler {
             }
             
             // Chiama la logica di calcolo
-            boolean risultato = Service.logicaDiCalcolo(request);
+            boolean risultato = ServiceV1.logicaDiCalcolo(request);
            
             
             // Crea l'oggetto risposta
