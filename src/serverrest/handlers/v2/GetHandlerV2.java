@@ -72,7 +72,7 @@ public class GetHandlerV2 implements HttpHandler {
             inviaRisposta(exchange, 200, jsonRisposta);
 
         } catch (IllegalArgumentException e) {
-            inviaErrore(exchange, 400, e.getMessage());
+            inviaErrore(exchange, 400, "Parametri non validi: " + e.getMessage());
         } catch (Exception e) {
             inviaErrore(exchange, 500, "Errore interno del server: " + e.getMessage());
         }

@@ -83,7 +83,7 @@ public class PostHandlerV2 implements HttpHandler {
         } catch (JsonSyntaxException e) {
             inviaErrore(exchange, 400, "JSON non valido: " + e.getMessage());
         } catch (IllegalArgumentException e) {
-            inviaErrore(exchange, 400, e.getMessage());
+            inviaErrore(exchange, 400, "Parametri non validi: " + e.getMessage());
         } catch (Exception e) {
             inviaErrore(exchange, 500, "Errore interno del server: " + e.getMessage());
         }
