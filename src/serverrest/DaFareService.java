@@ -19,7 +19,7 @@ public class DaFareService {
      * @return 
      * @throws IllegalArgumentException se ...
      */
-    public static double logicaDiCalcolo() 
+    public static double logicaDiCalcolo(Request request)
             throws IllegalArgumentException {
         
         // Controllo se i parametri passati sono validi

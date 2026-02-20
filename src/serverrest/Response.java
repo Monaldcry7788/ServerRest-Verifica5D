@@ -8,18 +8,20 @@ package serverrest;
  *
  * @author delfo
  */
-public class DaFareRequest {
-    // Costruttore vuoto necessario per GSON
-    public DaFareRequest() {
-    }
-
-    public DaFareRequest(String giocata, String numero) {
+public class Response {
+    public Response(String giocata, String numero, boolean vittoria) {
         this.giocata = giocata;
         this.numero = numero;
+        this.vittoria = vittoria;
+    }
+
+    // Costruttore vuoto necessario per GSON
+    public Response() {
     }
 
     private String giocata;
     private String numero;
+    private boolean vittoria;
 
     public String getGiocata() {
         return giocata;
@@ -35,5 +37,13 @@ public class DaFareRequest {
 
     public void setNumero(String numero) {
         this.numero = numero;
+    }
+
+    public boolean isVittoria() {
+        return vittoria;
+    }
+
+    public void setVittoria(boolean vittoria) {
+        this.vittoria = vittoria;
     }
 }
