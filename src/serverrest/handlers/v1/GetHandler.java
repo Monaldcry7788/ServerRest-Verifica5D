@@ -9,8 +9,8 @@ import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import serverrest.parsers.Request;
-import serverrest.parsers.Response;
+import serverrest.parsers.RequestV1;
+import serverrest.parsers.ResponseV1;
 import serverrest.Service;
 
 import java.io.IOException;
@@ -55,7 +55,7 @@ public class GetHandler implements HttpHandler {
             }
             
             // Parsing dei valori
-            Request request = new Request(parametri.get("giocata"), parametri.get("numero"));
+            RequestV1 request = new RequestV1(parametri.get("giocata"), parametri.get("numero"));
 
             if (request.getGiocata() == null || request.getNumero() == null) {
                 inviaErrore(exchange, 400, "Parametri mancanti. Necessari: giocata, numero");
@@ -66,7 +66,7 @@ public class GetHandler implements HttpHandler {
             boolean vittoria = Service.logicaDiCalcolo(request);
             
             // Crea l'oggetto risposta
-            Response response = new Response(request.getGiocata(), request.getNumero(), vittoria);
+            ResponseV1 response = new ResponseV1(request.getGiocata(), request.getNumero(), vittoria);
             
             // GSON converte automaticamente l'oggetto Java in JSON
             String jsonRisposta = gson.toJson(response);

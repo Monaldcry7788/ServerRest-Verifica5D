@@ -4,7 +4,7 @@
  */
 package serverrest;
 
-import serverrest.parsers.Request;
+import serverrest.parsers.RequestV1;
 
 /**
  *
@@ -21,7 +21,7 @@ public class Service {
      * @return 
      * @throws IllegalArgumentException se ...
      */
-    public static boolean logicaDiCalcolo(Request request) throws IllegalArgumentException {
+    public static boolean logicaDiCalcolo(RequestV1 request) throws IllegalArgumentException {
         
         // Controllo se i parametri passati sono validi
         if (!parametriValidi(request)) {
@@ -35,7 +35,7 @@ public class Service {
     }
 
     // Metodo di validazione dei parametri (da implementare)
-    private static boolean parametriValidi(Request request)
+    private static boolean parametriValidi(RequestV1 request)
     {
         return !request.getGiocata().isEmpty() && (request.getGiocata().equalsIgnoreCase("PARI") || request.getGiocata().equalsIgnoreCase("DISPARI") && !request.getNumero().isEmpty() && Integer.parseInt(request.getNumero()) <= 36);
     }

@@ -8,20 +8,18 @@ package serverrest.parsers;
  *
  * @author delfo
  */
-public class Response {
-    public Response(String giocata, String numero, boolean vittoria) {
-        this.giocata = giocata;
-        this.numero = numero;
-        this.vittoria = vittoria;
+public class RequestV1 {
+    // Costruttore vuoto necessario per GSON
+    public RequestV1() {
     }
 
-    // Costruttore vuoto necessario per GSON
-    public Response() {
+    public RequestV1(String giocata, String numero) {
+        this.giocata = giocata;
+        this.numero = numero;
     }
 
     private String giocata;
     private String numero;
-    private boolean vittoria;
 
     public String getGiocata() {
         return giocata;
@@ -37,13 +35,5 @@ public class Response {
 
     public void setNumero(String numero) {
         this.numero = numero;
-    }
-
-    public boolean isVittoria() {
-        return vittoria;
-    }
-
-    public void setVittoria(boolean vittoria) {
-        this.vittoria = vittoria;
     }
 }

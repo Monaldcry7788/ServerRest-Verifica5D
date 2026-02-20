@@ -10,8 +10,8 @@ import com.sun.net.httpserver.HttpHandler;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonSyntaxException;
-import serverrest.parsers.Request;
-import serverrest.parsers.Response;
+import serverrest.parsers.RequestV1;
+import serverrest.parsers.ResponseV1;
 import serverrest.Service;
 
 import java.io.BufferedReader;
@@ -51,7 +51,7 @@ public class PostHandler implements HttpHandler {
             BufferedReader reader = new BufferedReader(new InputStreamReader(exchange.getRequestBody(), StandardCharsets.UTF_8));
             
             // GSON converte automaticamente il JSON in oggetto Java
-            Request request = gson.fromJson(reader, Request.class);
+            RequestV1 request = gson.fromJson(reader, RequestV1.class);
             reader.close();
             
             // Validazione
@@ -70,7 +70,7 @@ public class PostHandler implements HttpHandler {
            
             
             // Crea l'oggetto risposta
-           Response response = new Response(request.getGiocata(), request.getNumero(), risultato);
+           ResponseV1 response = new ResponseV1(request.getGiocata(), request.getNumero(), risultato);
             
             // GSON converte automaticamente l'oggetto Java in JSON
             String jsonRisposta = gson.toJson(response);
@@ -87,7 +87,7 @@ public class PostHandler implements HttpHandler {
     }
     
     // Validazione dei parametri (da implementare)
-    private boolean validazioneParametri(Request request) {
+    private boolean validazioneParametri(RequestV1 request) {
         return request.getGiocata() != null && request.getNumero() != null;
     }
 
