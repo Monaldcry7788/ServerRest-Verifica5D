@@ -45,15 +45,15 @@ public class GetHandler implements HttpHandler {
             Map<String, String> parametri = estraiParametri(exchange.getRequestURI().getQuery());
             
             // Validazione parametri
-            if (validazioneParametri(parametri)) {
+            System.out.println("Parametri ricevuti: " + parametri);
+            System.out.println("Validazione parametri: " + validazioneParametri(parametri));
+            if (!validazioneParametri(parametri)) {
                 inviaErrore(exchange, 400, "Parametri mancanti. Necessari: giocata, numero");
                 return;
             }
             
             // Parsing dei valori
-            Request request = new Request();
-            request.setGiocata(parametri.get("giocata"));
-            request.setNumero(parametri.get("numero"));
+            Request request = new Request(parametri.get("giocata"), parametri.get("numero"));
 
             if (request.getGiocata() == null || request.getNumero() == null) {
                 inviaErrore(exchange, 400, "Parametri mancanti. Necessari: giocata, numero");
@@ -64,16 +64,13 @@ public class GetHandler implements HttpHandler {
             boolean vittoria = Service.logicaDiCalcolo(request);
             
             // Crea l'oggetto risposta
-            Response response = new Response(
-            );
+            Response response = new Response(request.getGiocata(), request.getNumero(), vittoria);
             
             // GSON converte automaticamente l'oggetto Java in JSON
             String jsonRisposta = gson.toJson(response);
             
             inviaRisposta(exchange, 200, jsonRisposta);
-            
-        } catch (NumberFormatException e) {
-            inviaErrore(exchange, 400, "Operandi non validi. Devono essere numeri");
+
         } catch (IllegalArgumentException e) {
             inviaErrore(exchange, 400, e.getMessage());
         } catch (Exception e) {
