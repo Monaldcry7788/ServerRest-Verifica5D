@@ -26,6 +26,7 @@ public class App {
                 porta = Integer.parseInt(args[0]);
             } catch (NumberFormatException e) {
                 System.err.println("Porta non valida, uso porta default 8080");
+                porta = 8080;
             }
         } else
         {
