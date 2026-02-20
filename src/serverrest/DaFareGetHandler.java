@@ -46,12 +46,12 @@ public class DaFareGetHandler implements HttpHandler {
             
             // Validazione parametri
             if (validazioneParametri(parametri)) {
-                inviaErrore(exchange, 400, 
-                    "Parametri mancanti. Necessari: operando1, operando2, operatore");
+                inviaErrore(exchange, 400, "Parametri mancanti. Necessari: operando1, operando2, operatore");
                 return;
             }
             
             // Parsing dei valori
+
             
             
             // Esegue la logica di calcolo
