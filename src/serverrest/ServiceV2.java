@@ -37,7 +37,7 @@ public class ServiceV2 {
      * @return 
      * @throws IllegalArgumentException se ...
      */
-    public static boolean logicaDiCalcolo(RequestV2 request) throws IllegalArgumentException {
+    public static float logicaDiCalcolo(RequestV2 request) throws IllegalArgumentException {
 
         // Controllo se i parametri passati sono validi
         if (!parametriValidi(request)) {
@@ -46,12 +46,14 @@ public class ServiceV2 {
 
         Integer numero = Integer.parseInt(request.getNumero());
         if (numero == 0)
-            return false;
+            return 0;
 
-        if (request.getGiocata().equalsIgnoreCase("ROSSO"))
-            return rosso.contains(request.getNumero());
-        else
-            return nero.contains(request.getNumero());
+        if (request.getGiocata().equalsIgnoreCase("ROSSO") && rosso.contains(request.getNumero()))
+            return request.getImporto() * 2;
+        else if (request.getGiocata().equalsIgnoreCase("NERO") && nero.contains(request.getNumero()))
+            return request.getImporto() * 2;
+
+        return 0;
     }
 
     // Metodo di validazione dei parametri (da implementare)

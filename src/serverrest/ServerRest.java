@@ -9,8 +9,8 @@ import com.sun.net.httpserver.HttpServer;
 import com.sun.net.httpserver.HttpExchange;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import serverrest.handlers.v1.GetHandler;
-import serverrest.handlers.v1.PostHandler;
+import serverrest.handlers.v1.GetHandlerV1;
+import serverrest.handlers.v1.PostHandlerV1;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
@@ -37,8 +37,8 @@ public class ServerRest {
             HttpServer server = HttpServer.create(new InetSocketAddress(porta), 0);
             
             // Registra gli handler per gli endpoint
-            server.createContext("/api/roulette/paridispari/get", new GetHandler());
-            server.createContext("/api/roulette/paridispari/post", new PostHandler());
+            server.createContext("/api/roulette/paridispari/get", new GetHandlerV1());
+            server.createContext("/api/roulette/paridispari/post", new PostHandlerV1());
            
             
             // Endpoint di benvenuto

@@ -3,15 +3,18 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 
-package serverrest.handlers.v1;
+package serverrest.handlers.v2;
 
-import com.sun.net.httpserver.HttpExchange;
-import com.sun.net.httpserver.HttpHandler;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import serverrest.parsers.RequestV1;
-import serverrest.parsers.ResponseV1;
+import com.sun.net.httpserver.HttpExchange;
+import com.sun.net.httpserver.HttpHandler;
 import serverrest.ServiceV1;
+import serverrest.ServiceV2;
+import serverrest.parsers.RequestV1;
+import serverrest.parsers.RequestV2;
+import serverrest.parsers.ResponseV1;
+import serverrest.parsers.ResponseV2;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -28,7 +31,7 @@ import java.util.Map;
  */
 
 
-public class GetHandler implements HttpHandler {
+public class GetHandlerV2 implements HttpHandler {
     
     // Istanza Gson configurata per pretty printing
     private final Gson gson = new GsonBuilder()
@@ -50,23 +53,18 @@ public class GetHandler implements HttpHandler {
             
             // Validazione parametri
             if (!validazioneParametri(parametri)) {
-                inviaErrore(exchange, 400, "Parametri mancanti. Necessari: giocata, numero");
+                inviaErrore(exchange, 400, "Parametri mancanti. Necessari: giocata, numero, importo");
                 return;
             }
             
             // Parsing dei valori
-            RequestV1 request = new RequestV1(parametri.get("giocata"), parametri.get("numero"));
-
-            if (request.getGiocata() == null || request.getNumero() == null) {
-                inviaErrore(exchange, 400, "Parametri mancanti. Necessari: giocata, numero");
-                return;
-            }
+            RequestV2 request = new RequestV2(parametri.get("giocata"), parametri.get("numero"), Float.parseFloat(parametri.get("importo")));
 
             // Esegue la logica di calcolo
-            boolean vittoria = ServiceV1.logicaDiCalcolo(request);
+            float vittoria = ServiceV2.logicaDiCalcolo(request);
             
             // Crea l'oggetto risposta
-            ResponseV1 response = new ResponseV1(request.getGiocata(), request.getNumero(), vittoria);
+            ResponseV2 response = new ResponseV2(request.getGiocata(), request.getNumero(), vittoria > 0, request.getImporto(), vittoria);
             
             // GSON converte automaticamente l'oggetto Java in JSON
             String jsonRisposta = gson.toJson(response);
@@ -82,7 +80,7 @@ public class GetHandler implements HttpHandler {
 
     // Validazione dei parametri (da implementare)
     private boolean validazioneParametri(Map<String, String> parametri) {
-        return parametri.containsKey("giocata") && parametri.containsKey("numero");
+        return parametri.containsKey("giocata") && parametri.containsKey("numero") && parametri.containsKey("importo");
     }
     
     /**
