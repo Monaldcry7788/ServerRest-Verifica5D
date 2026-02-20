@@ -4,6 +4,8 @@
  */
 package serverrest;
 
+import serverrest.parsers.Request;
+
 /**
  *
  * @author delfo

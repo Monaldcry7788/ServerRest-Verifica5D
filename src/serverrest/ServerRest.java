@@ -9,6 +9,9 @@ import com.sun.net.httpserver.HttpServer;
 import com.sun.net.httpserver.HttpExchange;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import serverrest.handlers.v1.GetHandler;
+import serverrest.handlers.v1.PostHandler;
+
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.util.HashMap;

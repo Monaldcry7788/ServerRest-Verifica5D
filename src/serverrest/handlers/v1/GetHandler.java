@@ -3,12 +3,16 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 
-package serverrest;
+package serverrest.handlers.v1;
 
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import serverrest.parsers.Request;
+import serverrest.parsers.Response;
+import serverrest.Service;
+
 import java.io.IOException;
 import java.io.OutputStream;
 import java.net.URLDecoder;
