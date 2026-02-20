@@ -45,8 +45,6 @@ public class GetHandler implements HttpHandler {
             Map<String, String> parametri = estraiParametri(exchange.getRequestURI().getQuery());
             
             // Validazione parametri
-            System.out.println("Parametri ricevuti: " + parametri);
-            System.out.println("Validazione parametri: " + validazioneParametri(parametri));
             if (!validazioneParametri(parametri)) {
                 inviaErrore(exchange, 400, "Parametri mancanti. Necessari: giocata, numero");
                 return;
