@@ -53,11 +53,6 @@ public class GetHandler implements HttpHandler {
             // Parsing dei valori
             Request request = new Request(parametri.get("giocata"), parametri.get("numero"));
 
-            if (request.getGiocata() == null || request.getNumero() == null) {
-                inviaErrore(exchange, 400, "Parametri mancanti. Necessari: giocata, numero");
-                return;
-            }
-
             // Esegue la logica di calcolo
             boolean vittoria = Service.logicaDiCalcolo(request);
             
@@ -70,7 +65,7 @@ public class GetHandler implements HttpHandler {
             inviaRisposta(exchange, 200, jsonRisposta);
 
         } catch (IllegalArgumentException e) {
-            inviaErrore(exchange, 400, e.getMessage());
+            inviaErrore(exchange, 400, "Errore nei parametri: " + e.getMessage());
         } catch (Exception e) {
             inviaErrore(exchange, 500, "Errore interno del server: " + e.getMessage());
         }
