@@ -11,8 +11,11 @@ import com.google.gson.JsonSyntaxException;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import serverrest.ServiceV1;
+import serverrest.ServiceV2;
 import serverrest.parsers.RequestV1;
+import serverrest.parsers.RequestV2;
 import serverrest.parsers.ResponseV1;
+import serverrest.parsers.ResponseV2;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -51,7 +54,7 @@ public class PostHandlerV2 implements HttpHandler {
             BufferedReader reader = new BufferedReader(new InputStreamReader(exchange.getRequestBody(), StandardCharsets.UTF_8));
             
             // GSON converte automaticamente il JSON in oggetto Java
-            RequestV1 request = gson.fromJson(reader, RequestV1.class);
+            RequestV2 request = gson.fromJson(reader, RequestV2.class);
             reader.close();
             
             // Validazione
@@ -61,16 +64,16 @@ public class PostHandlerV2 implements HttpHandler {
             }
             
             if (!validazioneParametri(request)) {
-                inviaErrore(exchange, 400, "Parametri mancanti o non validi. Necessari: giocata, numero");
+                inviaErrore(exchange, 400, "Parametri mancanti o non validi. Necessari: giocata, numero, importo");
                 return;
             }
             
             // Chiama la logica di calcolo
-            boolean risultato = ServiceV1.logicaDiCalcolo(request);
+            float risultato = ServiceV2.logicaDiCalcolo(request);
            
             
             // Crea l'oggetto risposta
-           ResponseV1 response = new ResponseV1(request.getGiocata(), request.getNumero(), risultato);
+           ResponseV2 response = new ResponseV2(request.getGiocata(), request.getNumero(), risultato > 0, request.getImporto(), risultato);
             
             // GSON converte automaticamente l'oggetto Java in JSON
             String jsonRisposta = gson.toJson(response);
@@ -87,8 +90,8 @@ public class PostHandlerV2 implements HttpHandler {
     }
     
     // Validazione dei parametri (da implementare)
-    private boolean validazioneParametri(RequestV1 request) {
-        return request.getGiocata() != null && request.getNumero() != null;
+    private boolean validazioneParametri(RequestV2 request) {
+        return request.getGiocata() != null && request.getNumero() != null && !Float.isNaN(request.getImporto());
     }
 
     /**
