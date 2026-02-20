@@ -41,7 +41,7 @@ public class ServiceV2 {
 
         // Controllo se i parametri passati sono validi
         if (!parametriValidi(request)) {
-            throw new IllegalArgumentException("Dati inseriti non validi. La giocata deve essere 'ROSSO' o 'NERO', il numero deve essere un intero compreso tra 0 e 36 e la puntata maggiore di 0.0");
+            throw new IllegalArgumentException("Dati inseriti non validi. Parametri richiesti: giocata, numero, importo. La giocata deve essere 'ROSSO' o 'NERO', il numero deve essere un intero compreso tra 0 e 36 e la puntata maggiore di 0.0");
         }
 
         Integer numero = Integer.parseInt(request.getNumero());

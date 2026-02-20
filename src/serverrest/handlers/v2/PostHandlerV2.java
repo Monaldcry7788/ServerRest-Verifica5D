@@ -70,7 +70,6 @@ public class PostHandlerV2 implements HttpHandler {
             
             // Chiama la logica di calcolo
             float risultato = ServiceV2.logicaDiCalcolo(request);
-           
             
             // Crea l'oggetto risposta
            ResponseV2 response = new ResponseV2(request.getGiocata(), request.getNumero(), risultato > 0, request.getImporto(), risultato);
