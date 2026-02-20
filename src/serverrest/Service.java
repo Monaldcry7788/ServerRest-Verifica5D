@@ -27,6 +27,8 @@ public class Service {
         }
 
         Integer numero = Integer.parseInt(request.getNumero());
+        if (numero == 0)
+            return false;
         return (request.getGiocata().equalsIgnoreCase("PARI") && numero % 2 == 0) || (request.getGiocata().equalsIgnoreCase("DISPARI") && numero % 2 != 0);
     }
 
