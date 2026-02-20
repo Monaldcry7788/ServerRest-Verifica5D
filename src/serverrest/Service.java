@@ -19,31 +19,20 @@ public class Service {
      * @return 
      * @throws IllegalArgumentException se ...
      */
-    public static double logicaDiCalcolo(Request request)
-            throws IllegalArgumentException {
+    public static boolean logicaDiCalcolo(Request request) throws IllegalArgumentException {
         
         // Controllo se i parametri passati sono validi
-                if (!parametriValidi(request)) {
-            throw new IllegalArgumentException("Operatore non può essere vuoto");
+        if (!parametriValidi(request)) {
+            throw new IllegalArgumentException("Dati inseriti non validi. La giocata deve essere 'PARI' o 'DISPARI' e il numero deve essere un intero compreso tra 0 e 36.");
         }
-        
-        try {
-            
-        } catch (Exception e) {
-            throw new IllegalArgumentException(
-                    "Opzione non valida. Opzione deve essere DA FARE");
-        }
-        return 0; // Placeholder, da sostituire con il risultato della logica di calcolo
+
+        Integer numero = Integer.parseInt(request.getNumero());
+        return (request.getGiocata().equalsIgnoreCase("PARI") && numero % 2 == 0) || (request.getGiocata().equalsIgnoreCase("DISPARI") && numero % 2 != 0);
     }
 
     // Metodo di validazione dei parametri (da implementare)
     private static boolean parametriValidi(Request request)
     {
-        if (request.getGiocata() == null || request.getGiocata().isEmpty()) {
-            return false;
-        }
-
-        int numero = Integer.parseInt(request.getNumero());
-        return ((numero % 2) == 0 && request.getGiocata().equalsIgnoreCase("PARI")) || ((numero % 2) != 0 && request.getGiocata().equalsIgnoreCase("DISPARI"));
+        return !request.getGiocata().isEmpty() && (request.getGiocata().equalsIgnoreCase("DISPARI") || request.getGiocata().equalsIgnoreCase("PARI")) && !request.getNumero().isEmpty() && Integer.parseInt(request.getNumero()) <= 36;
     }
 }

@@ -51,7 +51,6 @@ public class GetHandler implements HttpHandler {
             }
             
             // Parsing dei valori
-
             Request request = new Request();
             request.setGiocata(parametri.get("giocata"));
             request.setNumero(parametri.get("numero"));
@@ -62,7 +61,7 @@ public class GetHandler implements HttpHandler {
             }
 
             // Esegue la logica di calcolo
-            double risultato = Service.logicaDiCalcolo(request);
+            boolean vittoria = Service.logicaDiCalcolo(request);
             
             // Crea l'oggetto risposta
             Response response = new Response(
@@ -84,8 +83,7 @@ public class GetHandler implements HttpHandler {
 
     // Validazione dei parametri (da implementare)
     private boolean validazioneParametri(Map<String, String> parametri) {
-        return !parametri.containsKey("giocata") ||
-               !parametri.containsKey("numero");
+        return !parametri.containsKey("giocata") || !parametri.containsKey("numero");
     }
     
     /**
