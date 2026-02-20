@@ -80,7 +80,7 @@ public class GetHandler implements HttpHandler {
 
     // Validazione dei parametri (da implementare)
     private boolean validazioneParametri(Map<String, String> parametri) {
-        return !parametri.containsKey("giocata") || !parametri.containsKey("numero");
+        return parametri.containsKey("giocata") && parametri.containsKey("numero");
     }
     
     /**

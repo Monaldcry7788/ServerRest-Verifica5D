@@ -33,6 +33,6 @@ public class Service {
     // Metodo di validazione dei parametri (da implementare)
     private static boolean parametriValidi(Request request)
     {
-        return !request.getGiocata().isEmpty() && (request.getGiocata().equalsIgnoreCase("DISPARI") || request.getGiocata().equalsIgnoreCase("PARI")) && !request.getNumero().isEmpty() && Integer.parseInt(request.getNumero()) <= 36;
+        return !request.getGiocata().isEmpty() && (request.getGiocata().equalsIgnoreCase("PARI") || request.getGiocata().equalsIgnoreCase("DISPARI") && !request.getNumero().isEmpty() && Integer.parseInt(request.getNumero()) <= 36);
     }
 }

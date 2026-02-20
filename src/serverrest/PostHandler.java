@@ -26,7 +26,7 @@ import java.util.Map;
  */
 
 
-public class DaFarePostHandler implements HttpHandler {
+public class PostHandler implements HttpHandler {
     
     // Istanza Gson configurata per pretty printing
     private final Gson gson = new GsonBuilder()
@@ -44,9 +44,7 @@ public class DaFarePostHandler implements HttpHandler {
         
         try {
             // Legge il body della richiesta
-            BufferedReader reader = new BufferedReader(
-                new InputStreamReader(exchange.getRequestBody(), StandardCharsets.UTF_8)
-            );
+            BufferedReader reader = new BufferedReader(new InputStreamReader(exchange.getRequestBody(), StandardCharsets.UTF_8));
             
             // GSON converte automaticamente il JSON in oggetto Java
             Request request = gson.fromJson(reader, Request.class);
@@ -58,17 +56,17 @@ public class DaFarePostHandler implements HttpHandler {
                 return;
             }
             
-            if (validazioneParametri(request)) {
-                inviaErrore(exchange, 400, "Operatore mancante o vuoto");
+            if (!validazioneParametri(request)) {
+                inviaErrore(exchange, 400, "Parametri mancanti o non validi. Necessari: giocata, numero");
                 return;
             }
             
-            // Chiama la logica di calcolo DA FARE
+            // Chiama la logica di calcolo
+            boolean risultato = Service.logicaDiCalcolo(request);
            
             
-            // Crea l'oggetto risposta DA FARE
-           Response response = new Response(
-            );
+            // Crea l'oggetto risposta
+           Response response = new Response(request.getGiocata(), request.getNumero(), risultato);
             
             // GSON converte automaticamente l'oggetto Java in JSON
             String jsonRisposta = gson.toJson(response);
@@ -86,8 +84,7 @@ public class DaFarePostHandler implements HttpHandler {
     
     // Validazione dei parametri (da implementare)
     private boolean validazioneParametri(Request request) {
-        
-        return false;
+        return request.getGiocata() != null && request.getNumero() != null;
     }
 
     /**
