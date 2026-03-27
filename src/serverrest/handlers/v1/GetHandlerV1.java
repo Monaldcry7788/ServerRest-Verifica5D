@@ -62,16 +62,7 @@ public class GetHandlerV1 implements HttpHandler {
                 return;
             }
 
-            // Esegue la logica di calcolo
-            boolean vittoria = ServiceV1.logicaDiCalcolo(request);
-            
-            // Crea l'oggetto risposta
-            ResponseV1 response = new ResponseV1(request.getGiocata(), request.getNumero(), vittoria);
-            
-            // GSON converte automaticamente l'oggetto Java in JSON
-            String jsonRisposta = gson.toJson(response);
-            
-            inviaRisposta(exchange, 200, jsonRisposta);
+            inviaRisposta(exchange, 200, ServiceV1.handleResponse(request));
 
         } catch (IllegalArgumentException e) {
             inviaErrore(exchange, 400, e.getMessage());

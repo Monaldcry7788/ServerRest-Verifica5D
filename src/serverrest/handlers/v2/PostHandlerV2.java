@@ -67,17 +67,8 @@ public class PostHandlerV2 implements HttpHandler {
                 inviaErrore(exchange, 400, "Parametri mancanti o non validi. Necessari: giocata, numero, importo");
                 return;
             }
-            
-            // Chiama la logica di calcolo
-            float risultato = ServiceV2.logicaDiCalcolo(request);
-            
-            // Crea l'oggetto risposta
-           ResponseV2 response = new ResponseV2(request.getGiocata(), request.getNumero(), risultato > 0, request.getImporto(), risultato);
-            
-            // GSON converte automaticamente l'oggetto Java in JSON
-            String jsonRisposta = gson.toJson(response);
-            
-            inviaRisposta(exchange, 200, jsonRisposta);
+
+            inviaRisposta(exchange, 200, ServiceV2.handleResponse(request));
             
         } catch (JsonSyntaxException e) {
             inviaErrore(exchange, 400, "JSON non valido: " + e.getMessage());

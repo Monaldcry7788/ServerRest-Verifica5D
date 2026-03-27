@@ -6,7 +6,7 @@ public class ResponseV2 extends ResponseV1 {
         super();
     }
 
-    public ResponseV2(String giocata, String numero, boolean vittoria, float importogiocato, float importoriscosso) {
+    public ResponseV2(String giocata, int numero, String vittoria, float importogiocato, float importoriscosso) {
         super(giocata, numero, vittoria);
         this.importogiocato = importogiocato;
         this.importoriscosso = importoriscosso;

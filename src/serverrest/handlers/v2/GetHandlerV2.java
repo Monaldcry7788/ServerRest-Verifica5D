@@ -60,16 +60,7 @@ public class GetHandlerV2 implements HttpHandler {
             // Parsing dei valori
             RequestV2 request = new RequestV2(parametri.get("giocata"), parametri.get("numero"), Float.parseFloat(parametri.get("importo")));
 
-            // Esegue la logica di calcolo
-            float vittoria = ServiceV2.logicaDiCalcolo(request);
-            
-            // Crea l'oggetto risposta
-            ResponseV2 response = new ResponseV2(request.getGiocata(), request.getNumero(), vittoria > 0, request.getImporto(), vittoria);
-            
-            // GSON converte automaticamente l'oggetto Java in JSON
-            String jsonRisposta = gson.toJson(response);
-            
-            inviaRisposta(exchange, 200, jsonRisposta);
+            inviaRisposta(exchange, 200, ServiceV2.handleResponse(request));
 
         } catch (IllegalArgumentException e) {
             inviaErrore(exchange, 400, "Parametri non validi: " + e.getMessage());
