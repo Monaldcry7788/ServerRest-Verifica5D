@@ -91,8 +91,8 @@ public class GetHandlerV1 implements HttpHandler {
             String[] keyValue = coppia.split("=");
             if (keyValue.length == 2) {
                 try {
-                    String chiave = URLDecoder.decode(keyValue[0], "UTF-8");
-                    String valore = URLDecoder.decode(keyValue[1], "UTF-8");
+                    String chiave = URLDecoder.decode(keyValue[0], StandardCharsets.UTF_8);
+                    String valore = URLDecoder.decode(keyValue[1], StandardCharsets.UTF_8);
                     parametri.put(chiave, valore);
                 } catch (Exception e) {
                     // Ignora parametri malformati
