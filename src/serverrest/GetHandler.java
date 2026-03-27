@@ -52,17 +52,8 @@ public class GetHandler implements HttpHandler {
             
             // Parsing dei valori
             Request request = new Request(parametri.get("giocata"), parametri.get("numero"));
-
-            // Esegue la logica di calcolo
-            boolean vittoria = Service.logicaDiCalcolo(request);
             
-            // Crea l'oggetto risposta
-            Response response = new Response(request.getGiocata(), request.getNumero(), vittoria);
-            
-            // GSON converte automaticamente l'oggetto Java in JSON
-            String jsonRisposta = gson.toJson(response);
-            
-            inviaRisposta(exchange, 200, jsonRisposta);
+            inviaRisposta(exchange, 200, Service.handleResponse(request));
 
         } catch (IllegalArgumentException e) {
             inviaErrore(exchange, 400, "Errore nei parametri: " + e.getMessage());
@@ -91,8 +82,8 @@ public class GetHandler implements HttpHandler {
             String[] keyValue = coppia.split("=");
             if (keyValue.length == 2) {
                 try {
-                    String chiave = URLDecoder.decode(keyValue[0], "UTF-8");
-                    String valore = URLDecoder.decode(keyValue[1], "UTF-8");
+                    String chiave = URLDecoder.decode(keyValue[0], StandardCharsets.UTF_8);
+                    String valore = URLDecoder.decode(keyValue[1], StandardCharsets.UTF_8);
                     parametri.put(chiave, valore);
                 } catch (Exception e) {
                     // Ignora parametri malformati

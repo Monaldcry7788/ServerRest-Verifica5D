@@ -4,20 +4,25 @@
  */
 package serverrest;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonSyntaxException;
+
 /**
  *
  * @author delfo
  */
 public class Service {
-    
+    private static final Gson gson = new GsonBuilder()
+            .setPrettyPrinting()
+            .create();
+
     /**
-     * Esegue l'operazione matematica richiesta
+     * Esegue l'operazione richiesta dal client, ovvero verifica se la giocata è vincente o meno in base al numero estratto.
      * 
-     * @param 
-     * @param 
-     * @param 
-     * @return 
-     * @throws IllegalArgumentException se ...
+     * @param request la richiesta del client contenente la giocata e il numero
+     * @return true se la giocata è vincente, false altrimenti
+     * @throws IllegalArgumentException se i parametri della richiesta non sono validi (giocata diversa da "PARI" o "DISPARI", numero non compreso tra 0 e 36, o parametri null/empty)
      */
     public static boolean logicaDiCalcolo(Request request) throws IllegalArgumentException {
         
@@ -26,15 +31,47 @@ public class Service {
             throw new IllegalArgumentException("Dati inseriti non validi. La giocata deve essere 'PARI' o 'DISPARI' e il numero deve essere un intero compreso tra 0 e 36.");
         }
 
-        Integer numero = Integer.parseInt(request.getNumero());
+        int numero = Integer.parseInt(request.getNumero());
         if (numero == 0)
             return false;
         return (request.getGiocata().equalsIgnoreCase("PARI") && numero % 2 == 0) || (request.getGiocata().equalsIgnoreCase("DISPARI") && numero % 2 != 0);
     }
 
-    // Metodo di validazione dei parametri (da implementare)
+    public static String handleResponse(Request request) throws IllegalArgumentException, JsonSyntaxException, NumberFormatException {
+        String vittoria = String.valueOf(Service.logicaDiCalcolo(request));
+
+        // Crea l'oggetto risposta
+        int numero = Integer.parseInt(request.getNumero());
+        Response response = new Response(request.getGiocata(), numero, vittoria);
+
+        // GSON converte automaticamente l'oggetto Java in JSON
+        return gson.toJson(response);
+    }
+
     private static boolean parametriValidi(Request request)
     {
-        return !request.getGiocata().isEmpty() && (request.getGiocata().equalsIgnoreCase("PARI") || request.getGiocata().equalsIgnoreCase("DISPARI") && !request.getNumero().isEmpty() && Integer.parseInt(request.getNumero()) <= 36);
+        if (request == null)
+            return false;
+
+        String giocata = request.getGiocata();
+        String numeroStr = request.getNumero();
+
+        if (giocata == null || giocata.trim().isEmpty())
+            return false;
+        if (numeroStr == null || numeroStr.trim().isEmpty())
+            return false;
+
+        giocata = giocata.trim();
+        numeroStr = numeroStr.trim();
+
+        if (!giocata.equalsIgnoreCase("PARI") && !giocata.equalsIgnoreCase("DISPARI"))
+            return false;
+
+        try {
+            int numero = Integer.parseInt(numeroStr);
+            return numero >= 0 && numero <= 36;
+        } catch (NumberFormatException ex) {
+            return false;
+        }
     }
 }

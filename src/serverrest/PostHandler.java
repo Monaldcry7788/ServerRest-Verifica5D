@@ -61,18 +61,7 @@ public class PostHandler implements HttpHandler {
                 return;
             }
             
-            // Chiama la logica di calcolo
-            boolean risultato = Service.logicaDiCalcolo(request);
-           
-            
-            // Crea l'oggetto risposta
-           Response response = new Response(request.getGiocata(), request.getNumero(), risultato);
-            
-            // GSON converte automaticamente l'oggetto Java in JSON
-            String jsonRisposta = gson.toJson(response);
-            
-            inviaRisposta(exchange, 200, jsonRisposta);
-            
+            inviaRisposta(exchange, 200, Service.handleResponse(request));
         } catch (JsonSyntaxException e) {
             inviaErrore(exchange, 400, "JSON non valido: " + e.getMessage());
         } catch (IllegalArgumentException e) {

@@ -9,7 +9,7 @@ package serverrest;
  * @author delfo
  */
 public class Response {
-    public Response(String giocata, String numero, boolean vittoria) {
+    public Response(String giocata, int numero, String vittoria) {
         this.giocata = giocata;
         this.numero = numero;
         this.vittoria = vittoria;
@@ -20,8 +20,8 @@ public class Response {
     }
 
     private String giocata;
-    private String numero;
-    private boolean vittoria;
+    private int numero;
+    private String vittoria;
 
     public String getGiocata() {
         return giocata;
@@ -31,19 +31,19 @@ public class Response {
         this.giocata = giocata;
     }
 
-    public String getNumero() {
+    public int getNumero() {
         return numero;
     }
 
-    public void setNumero(String numero) {
+    public void setNumero(int numero) {
         this.numero = numero;
     }
 
-    public boolean isVittoria() {
+    public String isVittoria() {
         return vittoria;
     }
 
-    public void setVittoria(boolean vittoria) {
+    public void setVittoria(String vittoria) {
         this.vittoria = vittoria;
     }
 }
